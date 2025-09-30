@@ -271,7 +271,7 @@
             3.  **Haz una pregunta abierta**: Finaliza con una pregunta que invite a profundizar o a conectar con el siguiente paso.
             Tu respuesta debe ser en español, concisa, amigable y en un solo párrafo.`;
             
-            const apiKey = ""; 
+            const apiKey = "AIzaSyAtSbsZeZmN8ztpFpftT9wJomOzdi2B3Iw"; 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
             const payload = {
