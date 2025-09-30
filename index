@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebQuest: Género, Accesibilidad y Seguridad Vial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #fb923c, #f97316, #ea580c, #c2410c);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+            overflow: hidden;
+            padding: 1.5rem; /* Ajuste para el borde */
+        }
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
+        }
+        #app-container {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        .header-gradient {
+            background: linear-gradient(to right, #f97316, #ef4444);
+        }
+        .brand-text { color: #f97316; }
+        .tab-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .tab-btn.active {
+            color: #f97316;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #f97316;
+            border-radius: 3px;
+        }
+        .tab-content { display: none; height: 100%; }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .ai-conversation-box { background-color: #1f2937; }
+        .ai-message { background-color: #374151; }
+        .user-message { background-color: #4f46e5; }
+        .loader {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #f97316;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .btn-resource { background-color: #d97706; }
+        .btn-resource:hover { background-color: #b45309; }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen">
+
+    <div id="app-container" class="text-white overflow-hidden">
+        
+        <header class="header-gradient p-4 text-center flex-shrink-0">
+            <img src="https://i.imgur.com/jrW2403.png" alt="Logo Voces que Salvan" class="h-16 mx-auto mb-2">
+            <h1 class="text-xl font-black tracking-tight">🧭 WebQuest: Género, Accesibilidad y Seguridad Vial</h1>
+            <p class="text-xs text-orange-100 mt-1">Módulo P1 – Línea de Profundización</p>
+        </header>
+
+        <div class="p-4 flex-grow flex flex-col">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div class="bg-gray-700/50 p-3 rounded-xl border border-gray-600">
+                    <h2 class="font-bold text-base brand-text mb-1">🔍 Introducción</h2>
+                    <p class="text-xs text-gray-300 leading-relaxed">Nuestras calles no son neutras. Para Ana, con su bebé, un andén roto es una barrera. Para Carlos, mayor, un semáforo corto es un riesgo. Tu misión es analizar estas realidades y proponer acciones inclusivas.</p>
+                </div>
+                <div class="md:col-span-2 bg-gray-700/50 p-3 rounded-xl border border-gray-600">
+                    <h2 class="font-bold text-base brand-text mb-1">🎯 Tarea</h2>
+                    <p class="text-xs text-gray-300 leading-relaxed">Desarrollarás una <strong>propuesta de intervención</strong> con enfoque de género y accesibilidad para un lugar real. Deberás identificar un problema con datos y proponer una solución concreta (pedagógica, de comunicación o de infraestructura).</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-800/60 rounded-xl p-2 border border-gray-700 flex-grow flex flex-col">
+                <div id="tabs-nav" class="flex justify-around bg-gray-900/50 rounded-lg mb-2 flex-shrink-0">
+                    <button class="tab-btn active font-bold py-2 px-3 text-xs" data-target="#paso1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg><span>Comprende</span></button>
+                    <button class="tab-btn font-bold py-2 px-3 text-xs" data-target="#paso2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><span>Identifica</span></button>
+                    <button class="tab-btn font-bold py-2 px-3 text-xs" data-target="#paso3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h2a4 4 0 014 4v2m-6 4h.01M9 17h.01M15 17h.01M9 13h.01M15 13h.01M12 10v.01M12 7v.01M12 4v.01M4 4h16v16H4V4z"></path></svg><span>Analiza</span></button>
+                    <button class="tab-btn font-bold py-2 px-3 text-xs" data-target="#paso4"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg><span>Evalúa</span></button>
+                    <button class="tab-btn font-bold py-2 px-3 text-xs" data-target="#paso5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg><span>Construye</span></button>
+                </div>
+
+                <div id="tabs-content" class="px-2 pb-2 flex-grow">
+                    <!-- Contenido de los Pasos -->
+                    <div id="paso1" class="tab-content active h-full">
+                        <div class="grid grid-cols-2 gap-4 h-full">
+                            <div class="flex flex-col">
+                                <h3 class="font-bold text-md text-white mb-2">Comprende el enfoque</h3>
+                                <p class="text-xs text-gray-400 mb-2 flex-grow">🔎 Tu viaje como líder o lideresa comienza aquí, aprendiendo a ver el mundo con una <strong class="text-orange-400">doble lente: género y accesibilidad</strong>. Analiza los recursos para construir una base conceptual sólida que te permita identificar problemas que otros no ven.</p>
+                                <div class="ai-conversation-box p-3 rounded-lg mt-auto h-full flex flex-col">
+                                    <h4 class="font-semibold text-white text-sm mb-2 flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg><span>Inicia la Conversación</span></h4>
+                                    <div class="conversation-display flex-grow bg-gray-800/50 rounded p-2 mb-2 overflow-y-auto text-xs">
+                                        <div class="ai-message p-2 rounded-lg max-w-xs">¡Hola! Estoy aquí para ayudarte. Comienza contándome: ¿Qué roles de género y barreras de accesibilidad ves en tu comunidad?</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <textarea data-title="Paso 1: Roles de Género y Accesibilidad" class="notes-field w-full bg-gray-800 text-gray-200 border border-gray-600 rounded-md p-2 text-xs focus:ring-2 focus:ring-orange-500" rows="2" placeholder="Escribe tu reflexión aquí..."></textarea>
+                                        <button onclick="conversarConIA(this)" class="bg-orange-600 hover:bg-orange-700 text-white p-2 rounded-full transition-colors">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="space-y-3">
+                                <h4 class="font-bold text-md text-white mb-2">Recursos de Consulta</h4>
+                                <a href="https://trainingcentre.unwomen.org/mod/glossary/view.php?id=150&mode=letter&lang=es" target="_blank" class="block btn-resource p-2 rounded-lg font-semibold transition-colors text-center text-xs">Glosario de género (UN Women)</a>
+                                <a href="https://www.oisevi.org/sites/default/files/pdf/OISEVI_GENERO_WEB.pdf" target="_blank" class="block btn-resource p-2 rounded-lg font-semibold transition-colors text-center text-xs">Seguridad vial y género (OISEVI)</a>
+                                <a href="https://www.un.org/esa/socdev/enable/documents/tccconvs.pdf" target="_blank" class="block btn-resource p-2 rounded-lg font-semibold transition-colors text-center text-xs">Derechos Personas con Discapacidad</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="paso2" class="tab-content h-full">
+                        <div class="grid grid-cols-2 gap-4 h-full">
+                            <div class="flex flex-col">
+                                <h3 class="font-bold text-md text-white mb-2">Identifica desigualdades</h3>
+                                <p class="text-xs text-gray-400 mb-2 flex-grow">🧩 Con tus nuevas lentes puestas, ahora te convertirás en detective de tu entorno. Tu misión es encontrar las pistas de la desigualdad que se esconden a simple vista. Observa el video y reflexiona sobre estas pistas.</p>
+                                <ul class="text-xs text-gray-300 list-disc list-inside mb-2 space-y-1">
+                                    <li><strong class="text-orange-400">Mandatos de masculinidad:</strong> ¿Ves conductas de riesgo que se celebran socialmente?</li>
+                                    <li><strong class="text-orange-400">Barreras y miedos:</strong> ¿Hay lugares que las mujeres evitan? ¿Hay andenes intransitables?</li>
+                                 </ul>
+                                <div class="relative aspect-video w-full rounded-lg overflow-hidden shadow-md mt-auto">
+                                    <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/XK7RmkKjhgU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                            <div class="ai-conversation-box p-3 rounded-lg flex flex-col">
+                                <h4 class="font-semibold text-white text-sm mb-2">📌 Conversa y Reflexiona</h4>
+                                 <div class="conversation-display flex-grow bg-gray-800/50 rounded p-2 mb-2 overflow-y-auto text-xs">
+                                    <div class="ai-message p-2 rounded-lg max-w-xs">Basado en lo que viste, ¿qué comportamientos de riesgo y barreras físicas se refuerzan en tu contexto?</div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <textarea data-title="Paso 2: Comportamientos de Riesgo y Barreras" class="notes-field w-full bg-gray-800 text-gray-200 border border-gray-600 rounded-md p-2 text-xs focus:ring-2 focus:ring-orange-500" rows="2" placeholder="Escribe tu reflexión aquí..."></textarea>
+                                    <button onclick="conversarConIA(this)" class="bg-orange-600 hover:bg-orange-700 text-white p-2 rounded-full transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                   <!-- Los otros pasos seguirían una estructura similar -->
+                </div>
+            </div>
+        </div>
+
+        <button id="download-btn" title="Descargar Mis Reflexiones" class="absolute bottom-4 right-4 bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-3 rounded-full shadow-lg hover:scale-110 transition-transform z-20">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        </button>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabsNav = document.getElementById('tabs-nav');
+            const tabButtons = tabsNav.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabsNav.addEventListener('click', (e) => {
+                const clickedTab = e.target.closest('.tab-btn');
+                if (!clickedTab) return;
+
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                clickedTab.classList.add('active');
+
+                tabContents.forEach(content => content.classList.remove('active'));
+                const targetContent = document.querySelector(clickedTab.dataset.target);
+                targetContent.classList.add('active');
+            });
+
+            const downloadBtn = document.getElementById('download-btn');
+            downloadBtn.addEventListener('click', () => {
+                let fullText = "Mis Conversaciones - WebQuest: Género, Accesibilidad y Seguridad Vial\n";
+                fullText += "=======================================================================\n\n";
+                
+                const conversations = document.querySelectorAll('.ai-conversation-box');
+                let hasNotes = false;
+                conversations.forEach((convo, index) => {
+                    const title = convo.querySelector('textarea').dataset.title || `Paso ${index + 1}`;
+                    const messages = convo.querySelectorAll('.conversation-display div');
+                    
+                    if (messages.length > 1) { // Hay más que el mensaje inicial de la IA
+                        hasNotes = true;
+                        fullText += `## ${title}\n\n`;
+                        messages.forEach(msg => {
+                            const prefix = msg.classList.contains('user-message') ? 'Tú: ' : 'IA: ';
+                            fullText += `${prefix}${msg.textContent.trim()}\n`;
+                        });
+                        fullText += "\n----------------------------------------\n\n";
+                    }
+                });
+
+                if (!hasNotes) {
+                    alert("Aún no has conversado con la IA. ¡Anímate a reflexionar en los campos!");
+                    return;
+                }
+
+                const blob = new Blob([fullText], { type: 'text/plain;charset=utf-8' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'Mis_Conversaciones_Proyecto.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(a.href);
+            });
+        });
+
+        async function conversarConIA(button) {
+            const conversationBox = button.closest('.ai-conversation-box');
+            const textarea = conversationBox.querySelector('textarea');
+            const display = conversationBox.querySelector('.conversation-display');
+
+            const userText = textarea.value.trim();
+            if (!userText) {
+                alert("Por favor, escribe tu reflexión para continuar la conversación.");
+                return;
+            }
+
+            // Display user message
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'user-message p-2 rounded-lg max-w-xs ml-auto text-white mt-2';
+            userMessageDiv.textContent = userText;
+            display.appendChild(userMessageDiv);
+            textarea.value = '';
+            display.scrollTop = display.scrollHeight;
+
+            // Show loader in AI message
+            const loaderDiv = document.createElement('div');
+            loaderDiv.className = 'ai-message p-2 rounded-lg max-w-xs mt-2 flex items-center';
+            loaderDiv.innerHTML = '<div class="loader"></div>';
+            display.appendChild(loaderDiv);
+            display.scrollTop = display.scrollHeight;
+
+
+            const systemPrompt = `Eres un tutor experto en género, accesibilidad y seguridad vial. Revisa la siguiente reflexión de un estudiante. 
+            Tu rol es guiar, no dar todas las respuestas.
+            1.  **Valida su aporte**: Comienza con una frase positiva como "Interesante punto..." o "Buena observación...".
+            2.  **Añade valor**: En una o dos frases, complementa su idea con un dato, un concepto o una perspectiva relacionada.
+            3.  **Haz una pregunta abierta**: Finaliza con una pregunta que invite a profundizar o a conectar con el siguiente paso.
+            Tu respuesta debe ser en español, concisa, amigable y en un solo párrafo.`;
+            
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userText }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    loaderDiv.textContent = candidate.content.parts[0].text;
+                } else {
+                    loaderDiv.textContent = "No pude procesar tu respuesta. Intenta reformular tu idea.";
+                }
+            } catch (error) {
+                console.error("Error al contactar la IA:", error);
+                loaderDiv.textContent = "Hubo un error de conexión. Por favor, inténtalo más tarde.";
+            } finally {
+                 display.scrollTop = display.scrollHeight;
+            }
+        }
+    </script>
+
+</body>
+</html>
+
